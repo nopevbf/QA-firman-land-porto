@@ -57,14 +57,34 @@ export default function App() {
       const rawPath = window.location.pathname.replace(/^\/+/, '').replace(/\/+$/, '');
       const searchParams = new URLSearchParams(window.location.search);
       const querySlug = searchParams.get('projek') || searchParams.get('project');
+      const routeParam = searchParams.get('route');
+      const rawHash = window.location.hash.replace(/^#\/?/, '').replace(/^\/+/, '').replace(/\/+$/, '');
 
       let targetSlug = querySlug;
+      if (!targetSlug && routeParam) {
+        const cleanedRoute = decodeURIComponent(routeParam).replace(/^\/+/, '').replace(/\/+$/, '');
+        const rParts = cleanedRoute.split('/');
+        if (rParts[0] === 'projek' && rParts[1]) {
+          targetSlug = rParts[1];
+        } else if (rParts[0]) {
+          targetSlug = rParts[0];
+        }
+      }
       if (!targetSlug && rawPath) {
         const parts = rawPath.split('/');
         if (parts[0] === 'projek' && parts[1]) {
           targetSlug = parts[1];
         } else if (parts[0]) {
           targetSlug = parts[0];
+        }
+      }
+
+      if (!targetSlug && rawHash) {
+        const hashParts = rawHash.split('/');
+        if (hashParts[0] === 'projek' && hashParts[1]) {
+          targetSlug = hashParts[1];
+        } else if (hashParts[0]) {
+          targetSlug = hashParts[0];
         }
       }
 
@@ -87,7 +107,11 @@ export default function App() {
 
     syncRouteWithState();
     window.addEventListener('popstate', syncRouteWithState);
-    return () => window.removeEventListener('popstate', syncRouteWithState);
+    window.addEventListener('hashchange', syncRouteWithState);
+    return () => {
+      window.removeEventListener('popstate', syncRouteWithState);
+      window.removeEventListener('hashchange', syncRouteWithState);
+    };
   }, []);
 
   const [isContactOpen, setIsContactOpen] = useState(false);

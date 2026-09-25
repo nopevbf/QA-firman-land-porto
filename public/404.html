@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <title>Firman QA — Mengalihkan...</title>
+    <script>
+      (function() {
+        var path = window.location.pathname;
+        var search = window.location.search;
+        var hash = window.location.hash;
+        var query = search ? search + '&' : '?';
+        window.location.replace('/' + query + 'route=' + encodeURIComponent(path) + (hash ? hash : ''));
+      })();
+    </script>
+  </head>
+  <body style="background-color: #FAF7F1; font-family: sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; color: #2A2823;">
+    <p>Mengalihkan ke halaman...</p>
+  </body>
+</html>
