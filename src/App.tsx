@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Building2, 
   Mail, 
@@ -30,6 +30,65 @@ import { profileData, featuredLinks, socialLinks, projectsList, type ProjectItem
 export default function App() {
   const [selectedProject, setSelectedProject] = useState<ProjectItem | null>(null);
   const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+
+  // Navigasi ke projek dengan URL yang sesuai (misal: /projek/upload-foto-properti)
+  const navigateToProject = (project: ProjectItem) => {
+    setSelectedProject(project);
+    setIsProjectModalOpen(false);
+    const newPath = `/projek/${project.slug}`;
+    if (window.location.pathname !== newPath) {
+      window.history.pushState({ projectId: project.id, slug: project.slug }, '', newPath);
+    }
+    document.title = `${project.name} — Firman QA`;
+  };
+
+  // Navigasi kembali ke halaman utama profil (reset URL ke '/')
+  const navigateBackToHome = () => {
+    setSelectedProject(null);
+    if (window.location.pathname !== '/' && window.location.pathname !== '') {
+      window.history.pushState(null, '', '/');
+    }
+    document.title = 'Firman QA — Portfolio & Link Hub';
+  };
+
+  // Sinkronisasi otomatis URL browser (mendukung /projek/:slug, /:slug, search params, & tombol Back/Forward)
+  useEffect(() => {
+    const syncRouteWithState = () => {
+      const rawPath = window.location.pathname.replace(/^\/+/, '').replace(/\/+$/, '');
+      const searchParams = new URLSearchParams(window.location.search);
+      const querySlug = searchParams.get('projek') || searchParams.get('project');
+
+      let targetSlug = querySlug;
+      if (!targetSlug && rawPath) {
+        const parts = rawPath.split('/');
+        if (parts[0] === 'projek' && parts[1]) {
+          targetSlug = parts[1];
+        } else if (parts[0]) {
+          targetSlug = parts[0];
+        }
+      }
+
+      if (targetSlug) {
+        const matched = projectsList.find(
+          (p) =>
+            p.slug.toLowerCase() === targetSlug!.toLowerCase() ||
+            p.id.toLowerCase() === targetSlug!.toLowerCase()
+        );
+        if (matched) {
+          setSelectedProject(matched);
+          document.title = `${matched.name} — Firman QA`;
+          return;
+        }
+      }
+
+      setSelectedProject(null);
+      document.title = 'Firman QA — Portfolio & Link Hub';
+    };
+
+    syncRouteWithState();
+    window.addEventListener('popstate', syncRouteWithState);
+    return () => window.removeEventListener('popstate', syncRouteWithState);
+  }, []);
 
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [isShareOpen, setIsShareOpen] = useState(false);
@@ -155,7 +214,7 @@ Dikirim melalui formulir landing page Firman QA`
           <div className="flex items-center gap-3">
             {/* Tombol Kembali ke Kartu Profil */}
             <button
-              onClick={() => setSelectedProject(null)}
+              onClick={navigateBackToHome}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 active:bg-white/25 text-white text-xs sm:text-sm font-bold transition-all cursor-pointer border border-white/20 shadow-xs"
               title="Kembali ke Profil"
             >
@@ -170,7 +229,7 @@ Dikirim melalui formulir landing page Firman QA`
                 {selectedProject.name}
               </h1>
               <span className="hidden sm:inline-block text-[11px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono">
-                Live App Preview
+                /projek/{selectedProject.slug}
               </span>
             </div>
           </div>
@@ -192,7 +251,7 @@ Dikirim melalui formulir landing page Firman QA`
               <p className="text-lg font-bold mb-2">{selectedProject.name}</p>
               <p className="text-sm text-gray-300">Belum ada tautan yang dikonfigurasi.</p>
               <button
-                onClick={() => setSelectedProject(null)}
+                onClick={navigateBackToHome}
                 className="mt-4 px-4 py-2 bg-emerald-600 rounded-xl text-white font-semibold text-sm cursor-pointer"
               >
                 Kembali
@@ -452,10 +511,7 @@ Dikirim melalui formulir landing page Firman QA`
                 <button
                   key={project.id}
                   type="button"
-                  onClick={() => {
-                    setIsProjectModalOpen(false);
-                    setSelectedProject(project);
-                  }}
+                  onClick={() => navigateToProject(project)}
                   className="w-full py-3 px-4 rounded-xl font-bold text-center text-sm bg-[#FAF7F1] hover:bg-[#3B59FF] text-[#1C1C18] hover:text-white border border-gray-200 hover:border-[#3B59FF] shadow-2xs hover:shadow-md transition-all duration-150 cursor-pointer block active:scale-98"
                 >
                   {project.name}

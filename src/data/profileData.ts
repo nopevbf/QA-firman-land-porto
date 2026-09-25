@@ -275,6 +275,7 @@ export const socialLinks = {
 export interface ProjectItem {
   id: string;
   name: string;
+  slug: string;
   url?: string;
 }
 
@@ -282,12 +283,13 @@ export const projectsList: ProjectItem[] = [
   { 
     id: 'projek-1', 
     name: 'Upload Foto Properti', 
+    slug: 'upload-foto-properti',
     url: 'https://photo-upload-ivory.vercel.app/' 
   },
-  { id: 'projek-2', name: 'Projek 2', url: 'https://dparagon.com' },
-  { id: 'projek-3', name: 'Projek 3', url: 'https://dparagon.com' },
-  { id: 'projek-4', name: 'Projek 4', url: 'https://dparagon.com' },
-  { id: 'projek-5', name: 'Projek 5', url: 'https://dparagon.com' },
+  { id: 'projek-2', name: 'Projek 2', slug: 'projek-2', url: 'https://dparagon.com' },
+  { id: 'projek-3', name: 'Projek 3', slug: 'projek-3', url: 'https://dparagon.com' },
+  { id: 'projek-4', name: 'Projek 4', slug: 'projek-4', url: 'https://dparagon.com' },
+  { id: 'projek-5', name: 'Projek 5', slug: 'projek-5', url: 'https://dparagon.com' },
 ];
 
 export const featuredLinks = [
