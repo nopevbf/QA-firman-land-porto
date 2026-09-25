@@ -1,0 +1,6 @@
+{
+  "name": "Firman QA — Portfolio & Link Hub",
+  "description": "Landing page profil profesional Firman QA (QA Engineer) dengan navigasi responsif, tautan cepat, portofolio pengujian, dan formulir kontak email terintegrasi.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

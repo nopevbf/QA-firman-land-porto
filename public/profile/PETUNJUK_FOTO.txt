@@ -1,0 +1,19 @@
+# FOLDER FOTO PROFIL (FIRMAN QA)
+=====================================
+
+Folder ini khusus untuk menaruh foto profil Anda!
+
+Cara Penggunaan:
+1. Simpan foto profil Anda di dalam folder ini:
+   /public/profile/
+
+2. Beri nama file foto tersebut:
+   profile.jpg
+   (atau profile.png / profile.jpeg / avatar.jpg)
+
+3. Aplikasi web otomatis membaca dan menampilkan foto dari folder ini:
+   "/profile/profile.jpg"
+
+Catatan:
+- Format yang didukung: .jpg, .jpeg, .png, .webp
+- Rasio foto terbaik: 1:1 (kotak/persegi) agar pas saat dibingkai bulat di kartu profil.
