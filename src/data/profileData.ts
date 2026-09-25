@@ -21,10 +21,10 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     id: 'facebook',
     name: 'Facebook',
-    url: 'https://facebook.com/Mihawak22',
+    url: 'https://facebook.com/Mihawk22',
     icon: 'facebook',
     color: '#1877F2',
-    handle: 'Mihawak22',
+    handle: 'Mihawk22',
   },
   {
     id: 'twitter',
@@ -265,7 +265,7 @@ export const profileData = {
 };
 
 export const socialLinks = {
-  facebook: 'https://facebook.com/Mihawak22',
+  facebook: 'https://facebook.com/Mihawk22',
   twitter: 'https://x.com/f.a.prasetyo',
   instagram: 'https://instagram.com/firajitio',
   linkedin: 'https://linkedin.com/in/nopevbf',

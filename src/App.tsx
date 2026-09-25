@@ -306,8 +306,8 @@ Dikirim melalui formulir landing page Firman QA`
                 href={socialLinks.facebook}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Facebook (Mihawak22)"
-                title="Facebook: Mihawak22"
+                aria-label="Facebook (Mihawk22)"
+                title="Facebook: Mihawk22"
                 className="w-10 h-10 rounded-full bg-[#1877F2] text-white flex items-center justify-center shadow-sm hover:scale-110 active:scale-95 transition-transform"
               >
                 <svg className="w-5 h-5 fill-current" viewBox="0 0 24 24">
